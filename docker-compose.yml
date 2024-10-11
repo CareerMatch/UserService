@@ -1,0 +1,6 @@
+﻿services:
+  careermatch.userservices:
+    image: careermatch.userservices
+    build:
+      context: .
+      dockerfile: CareerMatch.UserServices/Dockerfile
