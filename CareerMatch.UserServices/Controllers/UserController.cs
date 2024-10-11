@@ -4,53 +4,60 @@ using CareerMatch.UserServices.Models;
 using CareerMatch.UserServices.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 
 [ApiController]
 [Route("api/[controller]")]
 public class UsersController : ControllerBase
 {
-    private readonly IUserService _userService;
+    private readonly IUserReadService _userReadService;
+    private readonly IUserWriteService _userWriteService;
 
-    public UsersController(IUserService userService)
+    // Inject both the read and write services
+    public UsersController(IUserReadService userReadService, IUserWriteService userWriteService)
     {
-        _userService = userService;
+        _userReadService = userReadService;
+        _userWriteService = userWriteService;
     }
 
+    // Read operation to get a user by ID
     [HttpGet("{id}")]
     public IActionResult GetUserById(Guid id)
     {
-        var user = _userService.GetUserById(id);
+        var user = _userReadService.GetUserById(id);
         if (user == null) return NotFound();
         return Ok(user);
     }
 
+    // Read operation to get all users
     [HttpGet]
     public IActionResult GetAllUsers()
     {
-        var users = _userService.GetAllUsers();
+        var users = _userReadService.GetAllUsers();
         return Ok(users);
     }
 
+    // Write operation to create a new user
     [HttpPost]
     public IActionResult CreateUser([FromBody] User user)
     {
-        _userService.CreateUser(user);
+        _userWriteService.CreateUser(user);
         return Ok();
     }
 
+    // Write operation to update an existing user
     [HttpPut("{id}")]
     public IActionResult UpdateUser(Guid id, [FromBody] User user)
     {
-        user.Id = id;
-        _userService.UpdateUser(user);
+        user.Id = id; // Ensure that the ID from the route is used
+        _userWriteService.UpdateUser(user);
         return Ok();
     }
 
+    // Write operation to delete a user by ID
     [HttpDelete("{id}")]
     public IActionResult DeleteUser(Guid id)
     {
-        _userService.DeleteUser(id);
+        _userWriteService.DeleteUser(id);
         return Ok();
     }
 }

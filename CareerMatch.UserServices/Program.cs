@@ -10,13 +10,13 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 // Add services to the container.
 builder.Services.AddControllers();
 
-// Add the DbContext with PostgreSQL
 builder.Services.AddDbContext<UserDbContext>(options =>
     options.UseNpgsql(connectionString));
 
 // Register services and repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserReadService, UserReadService>(); // Register read service
+builder.Services.AddScoped<IUserWriteService, UserWriteService>(); // Register write service
 
 var app = builder.Build();
 
