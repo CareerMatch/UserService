@@ -16,7 +16,7 @@ jobs:
   build:
 
     # Use the latest Ubuntu runner for the build
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       # Step 1: Check out the repository code
