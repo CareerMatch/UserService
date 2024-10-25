@@ -27,7 +27,7 @@ jobs:
       - name: Set up .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '8.0.x'  # Replace with your .NET version
+          dotnet-version: '8.0.'  # Replace with your .NET version
       
       # Step 3: Restore dependencies
       - name: Restore dependencies
@@ -42,7 +42,7 @@ jobs:
         run: dotnet test --no-restore --verbosity normal
         
   deploy:
-    runs on: self-hosted
+    runs-on: self-hosted
     steps:
       - name: checkout code
         uses: actions/checkout@v3
