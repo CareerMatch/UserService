@@ -12,6 +12,7 @@ public class Program
         var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 // Add services to the container.
+//check if CI Works
         builder.Services.AddControllers();
 
         builder.Services.AddDbContext<UserDbContext>(options =>
