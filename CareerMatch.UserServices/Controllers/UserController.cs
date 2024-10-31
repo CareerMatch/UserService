@@ -11,7 +11,6 @@ public class UsersController : ControllerBase
 {
     private readonly IUserReadService _userReadService;
     private readonly IUserWriteService _userWriteService;
-
     // Inject both the read and write services
     public UsersController(IUserReadService userReadService, IUserWriteService userWriteService)
     {
