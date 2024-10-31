@@ -2,6 +2,9 @@ using CareerMatch.UserServices.Models;
 using System;
 using System.Collections.Generic;
 
+namespace CareerMatch.UserServices.Repositories;
+
+
 public interface IUserRepository
 {
     User GetUserById(Guid id);

@@ -9,8 +9,7 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        var connectionString = Environment.GetEnvironmentVariable("COCKROACH_CONNECTION_STRING") 
-                               ?? builder.Configuration.GetConnectionString("DefaultConnection");
+        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 // Add services to the container.
 //check if CI Works

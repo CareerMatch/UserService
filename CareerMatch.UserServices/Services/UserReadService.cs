@@ -1,4 +1,5 @@
 using CareerMatch.UserServices.Models;
+using CareerMatch.UserServices.Repositories;
 
 namespace CareerMatch.UserServices.Services;
 
