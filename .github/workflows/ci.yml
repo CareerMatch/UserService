@@ -58,4 +58,4 @@ jobs:
         env:
           DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}
         run: |
-          docker run -d --name user-service -e DB_CONNECTION_STRING=$DB_CONNECTION_STRING -p 8082:80 ${{ secrets.DOCKER_USERNAME }}/user-services:v1
+          docker run -d --name user-service -e DB_CONNECTION_STRING=$DB_CONNECTION_STRING -p 8085:80 ${{ secrets.DOCKER_USERNAME }}/user-services:v1
