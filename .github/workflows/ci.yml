@@ -1,7 +1,5 @@
-# .github/workflows/ci.yml
-name: CI Workflow
+name: CI/CD Workflow
 
-# Trigger the workflow on push to dev and main, and on pull requests to these branches
 on:
   push:
     branches:
@@ -14,33 +12,26 @@ on:
 
 jobs:
   build:
-
-    # Use the latest Ubuntu runner for the build
     runs-on: self-hosted
 
     steps:
-      # Step 1: Check out the repository code
       - name: Check out code
         uses: actions/checkout@v3
-      
-      # Step 2: Set up .NET SDK
+
       - name: Set up .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '8.0'  # Replace with your .NET version
-      
-      # Step 3: Restore dependencies
+          dotnet-version: '8.0'
+
       - name: Restore dependencies
         run: dotnet restore
-      
-      # Step 4: Build the application
+
       - name: Build the application
         run: dotnet build --no-restore --configuration Release
-      
-      # Step 5: Run tests
+
       - name: Run tests
         run: dotnet test --no-restore --verbosity normal
-        
+  
   deploy:
     runs-on: self-hosted
     needs: build
@@ -53,16 +44,19 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build --no-cache -t ${{ secrets.DOCKER_USERNAME }}/user-services:v1 ./CareerMatch.UserServices
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/user-services:v1 ./CareerMatch.UserServices
           docker push "${{ secrets.DOCKER_USERNAME }}/user-services:v1"
 
-      - name: Set DB Connection
-        run: echo "DB_CONNECTION_STRING=${{ secrets.DB_CONNECTION_STRING }}" >> $GITHUB_ENV
-
-      - name: Deploy with Docker Compose
+      - name: Deploy Docker Container
         env:
           DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         run: |
-          docker-compose -f ./docker-compose.yml up -d
-  
+          # Stop and remove any existing container with the same name
+          docker stop user-services || true && docker rm user-services || true
+
+          # Run the new container with environment variables
+          docker run -d \
+            --name user-services \
+            -p 8085:80 \
+            -e DB_CONNECTION_STRING="${{ secrets.DB_CONNECTION_STRING }}" \
+            ${{ secrets.DOCKER_USERNAME }}/user-services:v1
