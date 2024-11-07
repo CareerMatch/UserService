@@ -45,15 +45,17 @@ jobs:
     runs-on: self-hosted
     needs: [build]
     steps:
-      - name: checkout code
-        uses: actions/checkout@v3
-        
       - name: Build and Push User Service Docker image
         env:
+          DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}  # Use the GitHub Secret
           APP_UID: 1000
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/user-services:v1 ./CareerMatch.UserServices
+          docker build --build-arg DB_CONNECTION_STRING=$DB_CONNECTION_STRING -t ${{ secrets.DOCKER_USERNAME }}/user-services:v1 ./CareerMatch.UserServices
           echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
           docker push ${{ secrets.DOCKER_USERNAME }}/user-services:v1
-        
-      
+
+      - name: Run the container
+        env:
+          DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}
+        run: |
+          docker run -d --name user-service -e DB_CONNECTION_STRING=$DB_CONNECTION_STRING -p 8080:80 ${{ secrets.DOCKER_USERNAME }}/user-services:v1
