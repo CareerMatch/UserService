@@ -1,6 +1,12 @@
-﻿services:
-  careermatch.userservices:
-    image: careermatch.userservices
+﻿version: '3.8'
+
+services:
+  user-service:
+    image: "${DOCKER_USERNAME}/user-services:v1"  # Your Docker image name
     build:
-      context: .
-      dockerfile: CareerMatch.UserServices/Dockerfile
+      context: ./CareerMatch.UserServices
+      dockerfile: Dockerfile
+    environment:
+      - DB_CONNECTION_STRING=${DB_CONNECTION_STRING} # Use your cloud DB connection string
+    ports:
+      - "8080:80"  # Host:Container Port
