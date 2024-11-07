@@ -1,25 +1,29 @@
-﻿# Base stage
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
 
-# Use the environment variable for the connection string
 ARG DB_CONNECTION_STRING
-ENV DB_CONNECTION_STRING=${DB_CONNECTION_STRING}
+ENV DB_CONNECTION_STRING=$DB_CONNECTION_STRING
 
 # Build stage
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
+
+# Set working directory in the container
 WORKDIR /src
 
 # Copy the .csproj file explicitly from the current directory
 COPY CareerMatch.UserServices.csproj ./
+
+# Restore the project’s dependencies
 RUN dotnet restore "CareerMatch.UserServices.csproj"
 
 # Copy the rest of the application files to the container
 COPY . . 
+
+# Set working directory to where the project file is located
 WORKDIR "/src"
 
 # Build the project
