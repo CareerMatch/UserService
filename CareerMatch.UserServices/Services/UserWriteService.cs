@@ -1,6 +1,7 @@
-namespace CareerMatch.UserServices.Services;
-
+using CareerMatch.UserServices.Repositories;
 using CareerMatch.UserServices.Models;
+
+namespace CareerMatch.UserServices.Services;
 
 public class UserWriteService : IUserWriteService
 {

@@ -1,11 +1,11 @@
-namespace CareerMatch.UserServices.Repositories;
-
 using CareerMatch.UserServices.Data;
 using CareerMatch.UserServices.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
+namespace CareerMatch.UserServices.Repositories;
 
 public class UserRepository : IUserRepository
 {
