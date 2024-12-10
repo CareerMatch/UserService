@@ -25,7 +25,7 @@ namespace CareerMatch.UserServices.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("CareerMatch.UserServices.Models.User", b =>
+            modelBuilder.Entity("UserServices.Models.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()

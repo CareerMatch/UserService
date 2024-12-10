@@ -6,6 +6,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
       <UserSecretsId>e9e78edd-4961-478a-8a8a-fa51ada382b5</UserSecretsId>
+      <RootNamespace>CareerMatch.UserServices</RootNamespace>
   </PropertyGroup>
 
     <ItemGroup>
