@@ -12,10 +12,10 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
 # Copy the .csproj file explicitly from the current directory
-COPY CareerMatch.UserServices.csproj ./
+COPY UserServices.csproj ./
 
 # Restore the project’s dependencies
-RUN dotnet restore "CareerMatch.UserServices.csproj"
+RUN dotnet restore "UserServices.csproj"
 
 # Copy the rest of the application files to the container
 COPY . . 
@@ -24,15 +24,15 @@ COPY . .
 WORKDIR "/src"
 
 # Build the project
-RUN dotnet build "CareerMatch.UserServices.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "UserServices.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Publish the project
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "CareerMatch.UserServices.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "UserServices.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # Final stage
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "CareerMatch.UserServices.dll"]
+ENTRYPOINT ["dotnet", "UserServices.dll"]
