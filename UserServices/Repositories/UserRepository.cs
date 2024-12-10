@@ -1,9 +1,5 @@
 using CareerMatch.UserServices.Data;
 using CareerMatch.UserServices.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace CareerMatch.UserServices.Repositories;
 
@@ -18,7 +14,12 @@ public class UserRepository : IUserRepository
 
     public User GetUserById(Guid id)
     {
-        return _context.Users.FirstOrDefault(u => u.Id == id && !u.IsDeleted);
+        var user = _context.Users.SingleOrDefault(u => u.Id == id && !u.IsDeleted);
+        if (user == null)
+        {
+            throw new KeyNotFoundException($"User with ID {id} not found.");
+        }
+        return user;
     }
 
     public IEnumerable<User> GetAllUsers()
@@ -41,11 +42,13 @@ public class UserRepository : IUserRepository
     public void DeleteUser(Guid id)
     {
         var user = GetUserById(id);
-        if (user != null)
+        if (user == null)
         {
-            user.IsDeleted = true; // Perform soft delete
-            _context.Users.Update(user);
-            _context.SaveChanges();
+            throw new KeyNotFoundException($"User with ID {id} not found.");
         }
+
+        user.IsDeleted = true; // Perform soft delete
+        _context.Users.Update(user);
+        _context.SaveChanges();
     }
 }

@@ -1,7 +1,7 @@
-namespace CareerMatch.UserServices.Data;
-
+using CareerMatch.UserServices.Models; 
 using Microsoft.EntityFrameworkCore;
-using CareerMatch.UserServices.Models; // Reference your models namespace
+
+namespace CareerMatch.UserServices.Data;
 
 public class UserDbContext : DbContext
 {

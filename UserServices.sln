@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerMatch.UserServices", "CareerMatch.UserServices\CareerMatch.UserServices.csproj", "{0F418669-F1A4-4A60-A930-365199B3EACD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserServices", "UserServices\UserServices.csproj", "{0F418669-F1A4-4A60-A930-365199B3EACD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F01684FE-C072-4484-9530-B6F6B12D4EAF}"
 	ProjectSection(SolutionItems) = preProject

@@ -3,13 +3,15 @@ using CareerMatch.UserServices.Repositories;
 using CareerMatch.UserServices.Services;
 using Microsoft.EntityFrameworkCore;
 
+namespace CareerMatch.UserServices;
 public class Program
 {
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+        var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") 
+                               ?? builder.Configuration.GetConnectionString("DefaultConnection");
 
 // Add services to the container.
 //check if CI Works
@@ -35,7 +37,9 @@ public class Program
 
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
-        app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+        app.UseAuthorization(); // Make sure to keep authorization middleware if needed
+
+        app.MapControllers();
 
         app.Run();
     }

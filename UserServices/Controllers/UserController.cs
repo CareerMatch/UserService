@@ -34,8 +34,7 @@ public class UsersController : ControllerBase
         var users = _userReadService.GetAllUsers();
         return Ok(users);
     }
-
-    // Write operation to create a new user
+    
     [HttpPost]
     public IActionResult CreateUser([FromBody] User user)
     {
