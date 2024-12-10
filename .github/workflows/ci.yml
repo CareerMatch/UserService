@@ -44,7 +44,7 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/user-services:v1 ./CareerMatch.UserServices
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/user-services:v1 ./UserServices
           docker push "${{ secrets.DOCKER_USERNAME }}/user-services:v1"
 
       - name: Deploy Docker Container
