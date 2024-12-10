@@ -9,4 +9,4 @@ services:
     environment:
       - DB_CONNECTION_STRING=${DB_CONNECTION_STRING} # Use your cloud DB connection string
     ports:
-      - "8080:80"  # Host:Container Port
+      - "8085:80"  # Host:Container Port

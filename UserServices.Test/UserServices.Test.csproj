@@ -23,7 +23,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CareerMatch.UserServices\CareerMatch.UserServices.csproj" />
+      <ProjectReference Include="..\UserServices\UserServices.csproj" />
     </ItemGroup>
 
 </Project>
